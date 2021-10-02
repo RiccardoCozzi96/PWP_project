@@ -9,19 +9,18 @@ args = parser.parse_args()
 MODEL = f"{args.model.lower()}"
 DATA_PATH = "./CP/data"
 MODEL_PATH = f"./CP/{MODEL}/{MODEL}.mzn"
-MINIZINC = json.load(open("config.json"))["MINIZINC"]
+MINIZINC = json.load(open("config.json"))["CP"]
 SOLUTIONS_PATH = f"./CP/{MODEL}/solutions"
 PLOTS_PATH = f"./CP/{MODEL}/plots"
 LOG_PATH = f"./CP/{MODEL}/log.json"
 data_files = [name for name in os.listdir(DATA_PATH) if ".dzn" in name]
 
-
 # # # # # SETUP # # # # #
 
-print("\n* * * * STM solver * * * *\n")
+print("\n* * * * CP solver * * * *\n")
 
 # setup the environment
-for folder_name in [SOLUTIONS_PATH, PLOTS_PATH, LOG_PATH]:
+for folder_name in [SOLUTIONS_PATH, PLOTS_PATH]:
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
         print(f"[SETUP]\tFolder '{folder_name}' created.")
@@ -31,11 +30,12 @@ for folder_name in [SOLUTIONS_PATH, PLOTS_PATH, LOG_PATH]:
 try:
     with open(LOG_PATH, "r") as f:
         log = json.load(f)
-        print(f"[SETUP]\tLog loaded. {len(log.keys())} solution have been recorded")
+        print(f"[SETUP]\tLog loaded. {len(log.keys())} solutions found.")
 except:
     open(LOG_PATH, "w")
     log = {}
     print("[SETUP]\tLog created. ")
+    pass
 
 print(f"[SETUP]\tmodel: {args.model.upper()}")
 input("\nPress ENTER to start\n\n")
@@ -46,7 +46,7 @@ for i, file_name in enumerate(data_files):
 
     instance_name = file_name.replace(".dzn", "")
     solution_file = f"{SOLUTIONS_PATH}/solution_{instance_name}.txt"
-    print("\n\n--- Instance", file_name, f" [{i+1}/{len(data_files)}] ---\n")
+    print("\n--- Instance", file_name, f" [{i+1}/{len(data_files)}] ---\n")
     if instance_name in log and not args.override: 
         print(f"\tAlready solved ({str(log[instance_name]).upper()})")
         continue

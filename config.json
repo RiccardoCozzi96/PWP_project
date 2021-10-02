@@ -1,4 +1,4 @@
 {
-    "MINIZINC": "minizinc",
-    "Z3": "z3"
+    "CP": "minizinc",
+    "SMT": "z3"
 }

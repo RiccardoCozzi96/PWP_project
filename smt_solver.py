@@ -8,7 +8,7 @@ args = parser.parse_args()
 
 MODEL_PATH = f"./SMT/{args.model.lower()}"
 DATA_PATH = "./SMT/data"
-Z3 = json.load(open("config.json"))["Z3"]
+Z3 = json.load(open("config.json"))["SMT"]
 SOLUTIONS_PATH = f"{MODEL_PATH}/solutions"
 SMT_SOLUTIONS_PATH = f"{MODEL_PATH}/smt_solutions"
 SMT_SRC_PATH = f"{MODEL_PATH}/smt_src"
@@ -22,7 +22,7 @@ else: from SMT.utils_general import *
 
 # # # # # # # # SETUP # # # # # # # # # #
 
-print("\n* * * * STM solver * * * *\n")
+print("\n* * * * SMT solver * * * *\n")
 
 # setup the environment
 for folder_name in [MODEL_PATH, SOLUTIONS_PATH, SMT_SOLUTIONS_PATH, SMT_SRC_PATH, PLOTS_PATH]:
@@ -35,7 +35,7 @@ for folder_name in [MODEL_PATH, SOLUTIONS_PATH, SMT_SOLUTIONS_PATH, SMT_SRC_PATH
 try:
     with open(LOG_PATH, "r") as f:
         log = json.load(f)
-        print(f"[SETUP]\tLog loaded. {len(log.keys())} solution have been recorded")
+        print(f"[SETUP]\tLog loaded: {len(log.keys())} solutions found.")
 except:
     open(LOG_PATH, "w")
     log = {}
@@ -51,7 +51,7 @@ for i, file_name in enumerate(data_files):
 
     instance_name = file_name.replace(".txt", "")
     solution_file = f"{SOLUTIONS_PATH}/solution_{instance_name}.txt"
-    print("\n\n--- Instance", file_name, f" [{i+1}/{len(data_files)}] ---")
+    print("\n--- Instance", file_name, f" [{i+1}/{len(data_files)}] ---")
     if instance_name in log and not args.override: 
         print(f"\tAlready solved ({str(log[instance_name]).upper()})")
         continue
