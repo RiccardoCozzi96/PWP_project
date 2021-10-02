@@ -45,7 +45,15 @@ Results will be saved in the corresponding folder (solver/model):
  - PLOTS: /solver/model/plots/\*.png
  - LOG: /solver/model/log.json
 
-The log records the results for each instance (solving times if satisfiable). 
+The log records the results for each instance (solving times if satisfiable).
+
+## Logs
+
+Once all the models have been run, and the log files have been generated, the results of the commputations
+can be easily viewed in tabular form by running the results_viewer python script with the following command:
+```
+python results_viewer.py
+```
 
 ## Notes
 
