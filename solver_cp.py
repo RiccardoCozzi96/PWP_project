@@ -7,7 +7,7 @@ parser.add_argument("--override", help="[default: False] set to true to recomput
 args = parser.parse_args()
 
 MODEL = f"{args.model.lower()}"
-DATA_PATH = "./CP/data"
+DATA_PATH = "./CP/__data__"
 MODEL_PATH = f"./CP/{MODEL}/{MODEL}.mzn"
 MINIZINC = json.load(open("config.json"))["CP"]
 SOLUTIONS_PATH = f"./CP/{MODEL}/solutions"

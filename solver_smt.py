@@ -7,7 +7,7 @@ parser.add_argument("--override", help="[default: False] set to true to recomput
 args = parser.parse_args()
 
 MODEL_PATH = f"./SMT/{args.model.lower()}"
-DATA_PATH = "./SMT/data"
+DATA_PATH = "./SMT/__data__"
 Z3 = json.load(open("config.json"))["SMT"]
 SOLUTIONS_PATH = f"{MODEL_PATH}/solutions"
 SMT_SOLUTIONS_PATH = f"{MODEL_PATH}/smt_solutions"
