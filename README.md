@@ -1,5 +1,4 @@
 # Present-Wrapping-Problem
-#### Cozzi Riccardo, Liscio Alessandro
  
 ## CONFIG
 
