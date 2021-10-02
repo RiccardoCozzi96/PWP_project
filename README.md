@@ -29,7 +29,7 @@ Use one of the following commands in your shell with the desired option for the 
 
 #### Minizinc Solver
 ```
-python minizinc_solver.py --model=MODEL_OPT
+python cp_solver.py --model=MODEL_OPT
 ```
 #### Smt Solver
 ```
