@@ -1,9 +1,9 @@
 # Execution files
 log.*
-plots/
-solutions/
-smt_solutions/
-smt_src/
+**/plots/
+**/solutions/
+**/smt_solutions/
+**/smt_src/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
