@@ -41,9 +41,9 @@ The optional parameter --override can be used to force the computation of every 
 ## Results
 
 Results will be saved in the corresponding folder (solver/model):
- - SOLUTION: /solver/model/solution/\*.txt
+ - SOLUTIONS: /solver/model/solution/\*.txt
  - PLOTS: /solver/model/plots/\*.png
- - LOG: /solver/model/log.json
+ - LOGS: /solver/model/log.json
 
 The log records the results for each instance (solving times if satisfiable).
 
