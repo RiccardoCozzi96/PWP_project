@@ -29,11 +29,11 @@ Use one of the following commands in your shell with the desired option for the 
 
 #### Minizinc Solver
 ```
-python cp_solver.py --model=MODEL_OPT
+python solver_cp.py --model=MODEL_OPT
 ```
 #### Smt Solver
 ```
-python smt_solver.py --model=MODEL_OPT
+python solver_smt.py --model=MODEL_OPT
 ```
 
 The optional parameter --override can be used to force the computation of every instances.
