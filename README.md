@@ -8,8 +8,8 @@ Once finished, the config.json file should look like this:
 #### With executable paths
 ```
 {
-    "CP": "cmd /c /path/to/minizinc/executable"
-    "SMT":       "cmd /c /path/to/z3/executable"
+    "CP":  "cmd /c /path/to/minizinc/executable"
+    "SMT": "cmd /c /path/to/z3/executable"
 }
 ```
 #### With environment variables
