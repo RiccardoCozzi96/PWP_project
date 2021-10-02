@@ -8,15 +8,15 @@ Once finished, the config.json file should look like this:
 #### With executable paths
 ```
 {
-    "MINIZINC": "cmd /c /path/to/minizinc/executable"
-    "Z3":       "cmd /c /path/to/z3/executable"
+    "CP": "cmd /c /path/to/minizinc/executable"
+    "SMT":       "cmd /c /path/to/z3/executable"
 }
 ```
 #### With environment variables
 ```
 {
-    "MINIZINC": "minizinc"
-    "Z3": "z3"
+    "CP": "minizinc"
+    "SMT": "z3"
 }
 ```
 
