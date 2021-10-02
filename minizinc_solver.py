@@ -1,32 +1,32 @@
 import os, time, json, argparse
-from utils import *
+from CP.utils import *
 
 parser = argparse.ArgumentParser(description='Argument parser')
 parser.add_argument("--model", help="[base]: assume each piece fixed, [general]: pieces can rotate", required = True, type=str)
 parser.add_argument("--override", help="[default: False] set to true to recompute and override previously solved solutions", required = False, default=False, type=bool)
 args = parser.parse_args()
 
-MODEL = f"./{args.model.lower()}"
-DATA_PATH = "./data"
-MODEL_PATH = f"{MODEL}/{MODEL}.mzn"
+MODEL = f"{args.model.lower()}"
+DATA_PATH = "./CP/data"
+MODEL_PATH = f"./CP/{MODEL}/{MODEL}.mzn"
 MINIZINC = json.load(open("config.json"))["MINIZINC"]
-SOLUTIONS_PATH = f"{MODEL}/solutions"
-PLOTS_PATH = f"{MODEL}/plots"
-LOG_PATH = f"{MODEL}/log.json"
+SOLUTIONS_PATH = f"./CP/{MODEL}/solutions"
+PLOTS_PATH = f"./CP/{MODEL}/plots"
+LOG_PATH = f"./CP/{MODEL}/log.json"
 data_files = [name for name in os.listdir(DATA_PATH) if ".dzn" in name]
 
 
 # # # # # SETUP # # # # #
-print("\n\nMinizinc Solver\n-----------------------\n\n")
-if not os.path.exists(SOLUTIONS_PATH):
-    os.mkdir(SOLUTIONS_PATH)
-    print("[SETUP]\tsolution folder created.")
-print(f"[SETUP]\t{len(os.listdir(SOLUTIONS_PATH))} solution file have been found")
 
-if not os.path.exists(PLOTS_PATH):
-    os.mkdir(PLOTS_PATH)
-    print("[SETUP]\tplots folder created.")
-print(f"[SETUP]\t{len(os.listdir(PLOTS_PATH))} solution plots have been found")
+print("\n* * * * STM solver * * * *\n")
+
+# setup the environment
+for folder_name in [SOLUTIONS_PATH, PLOTS_PATH, LOG_PATH]:
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"[SETUP]\tFolder '{folder_name}' created.")
+    else:
+        print(f"[SETUP]\tFolder '{folder_name}' already exists.")
 
 try:
     with open(LOG_PATH, "r") as f:
@@ -39,8 +39,8 @@ except:
 
 print(f"[SETUP]\tmodel: {args.model.upper()}")
 input("\nPress ENTER to start\n\n")
-# # # # # # # # # # # # # # # # # # # # # # # # # # try to solve each instance
 
+# # # # # # # FIND SOLUTIONS # # # # # # # # #
 
 for i, file_name in enumerate(data_files):
 

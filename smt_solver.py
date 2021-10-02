@@ -6,8 +6,8 @@ parser.add_argument("--model", help="[base]: assume each piece fixed, [general]:
 parser.add_argument("--override", help="[default: False] set to true to recompute and override previously solved solutions", required = False, default=False, type=bool)
 args = parser.parse_args()
 
-MODEL_PATH = f"{args.model.lower()}"
-DATA_PATH = "./data"
+MODEL_PATH = f"./SMT/{args.model.lower()}"
+DATA_PATH = "./SMT/data"
 Z3 = json.load(open("config.json"))["Z3"]
 SOLUTIONS_PATH = f"{MODEL_PATH}/solutions"
 SMT_SOLUTIONS_PATH = f"{MODEL_PATH}/smt_solutions"
@@ -17,10 +17,11 @@ LOG_PATH = f"{MODEL_PATH}/log.json"
 data_files = os.listdir(DATA_PATH)
 
 assert args.model in ["base", "general"]
-if args.model == "base": from utils_base import *
-else: from utils_general import *
+if args.model == "base": from SMT.utils_base import *
+else: from SMT.utils_general import *
 
-# # # # # # # # # # # # # # # # # # # # # # # # # #  initializing the environment
+# # # # # # # # SETUP # # # # # # # # # #
+
 print("\n* * * * STM solver * * * *\n")
 
 # setup the environment
@@ -43,8 +44,8 @@ except:
 
 print(f"[SETUP]\tmodel: {args.model.upper()}")
 input("\nPress ENTER to start\n\n")
-# # # # # # # # # # # # # # # # # # # # # # # # # # create code and find the solution for each instance
 
+# # # # CREATE CODE AND FIND SOLUTIONS # # # # #
 
 for i, file_name in enumerate(data_files):
 
