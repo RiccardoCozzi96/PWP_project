@@ -3,7 +3,7 @@
 ## CONFIG
 
 Set the variables in config.json file such that they point to the minizinc and 
-z3 executables. Once you have finished, the config.json file should look like this:
+z3 executables. Once finished, the config.json file should look like this:
 
 #### With executable paths
 ```
