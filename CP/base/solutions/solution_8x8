@@ -1,0 +1,3 @@
+minizinc: MiniZinc driver.
+Usage: minizinc  [<options>] [-I <include path>] <model>.mzn [<data>.dzn ...] or just <flat>.fzn
+More info with "C:/Users/ricbr/AppData/Local/Programs/MiniZinc/minizinc.exe --help"
