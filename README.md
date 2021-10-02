@@ -15,7 +15,7 @@ Once finished, the config.json file should look like this:
 #### With environment variables
 ```
 {
-    "CP": "minizinc"
+    "CP":  "minizinc"
     "SMT": "z3"
 }
 ```
