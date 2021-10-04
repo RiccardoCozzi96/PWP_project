@@ -4,6 +4,7 @@ from CP.utils import *
 parser = argparse.ArgumentParser(description='Argument parser')
 parser.add_argument("--model", help="[base]: assume each piece fixed, [general]: pieces can rotate", required = True, type=str)
 parser.add_argument("--override", help="[default: False] set to true to recompute and override previously solved solutions", required = False, default=False, type=bool)
+parser.add_argument("--solve", help="[default: all] provide the instances you want to solve, separated by a comma. E.g. 8x8,10x10,20x20", required = False, default=None, type=str)
 args = parser.parse_args()
 
 MODEL = f"{args.model.lower()}"
@@ -38,6 +39,12 @@ except:
     pass
 
 print(f"[SETUP]\tmodel: {args.model.upper()}")
+print("Instances to be solved:")
+to_solve = args.solve.split(",") if args.solve != None else None
+if to_solve == None:
+    print(" - all")
+else:
+    print(to_solve)
 input("\nPress ENTER to start\n\n")
 
 # # # # # # # FIND SOLUTIONS # # # # # # # # #
@@ -45,8 +52,12 @@ input("\nPress ENTER to start\n\n")
 for i, file_name in enumerate(data_files):
 
     instance_name = file_name.replace(".dzn", "")
+
+    if to_solve != None and instance_name not in to_solve:
+        continue
+    
     solution_file = f"{SOLUTIONS_PATH}/solution_{instance_name}.txt"
-    print("\n--- Instance", file_name, f" [{i+1}/{len(data_files)}] ---\n")
+    print("\n\n--- Instance", file_name, " ---")
     if instance_name in log and not args.override: 
         print(f"\tAlready solved ({str(log[instance_name]).upper()})")
         continue

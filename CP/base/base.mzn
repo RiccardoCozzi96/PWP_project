@@ -37,7 +37,7 @@ constraint cumulative(origins[.., y], shapes[.., y], shapes[.., x], w);
 % % % % % % % % % %  SEARCH  % % % % % % % % % % % % 
 
 ann:search_ann;
-search_ann = int_search(origins, dom_w_deg, indomain_min)
+search_ann = int_search(origins, dom_w_deg, indomain_min);
 
 ann:restart_ann;
 restart_ann = restart_luby(1000);
