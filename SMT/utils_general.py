@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import seaborn as sns
 
 
 def load_instance(name, verbose=False):
@@ -75,11 +76,6 @@ $_DEFINE_ORIGINS
       (and (< bx (+ ax aw)) (<= (+ ax aw) (+ bx bw)))   ; ends inside horizontally    : bx < (ax + aw) <= (bx + bw)
       (and (<= ay by) (>= (+ ay ah) (+ by bh)))         ; vertically starts outside, ends outside   : (by <= ay) and ((ay + ah) >= (by + bh))
     )
-    (and 
-      (and (<= by ay) (< ay (+ by bh)))                 ; starts inside vertically  : bx <= ax < (bx + bw)
-      (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh)))   ; ends inside vertically    : bx < (ax + aw) <= (bx + bw)
-      (and (<= ax bx) (>= (+ ax aw) (+ bx bw)))         ; horizontally starts before, ends after   : (by <= ay) and ((ay + ah) >= (by + bh))
-    )
   )
 )
 
@@ -113,12 +109,9 @@ $_ASSERT_NOT_OVERLAP
     default_shapes_constraints += f"(define-fun p{i+1}_w_default () Int {width})\n(define-fun p{i+1}_h_default () Int {height})\n"
     
     # build shapes constraints
-    #shapes_constraints += f"(define-fun p{i+1}_w () Int (ite p{i+1}_rotate p{i+1}_h_default p{i+1}_w_default))\n"
-    #shapes_constraints += f"(define-fun p{i+1}_h () Int (ite p{i+1}_rotate p{i+1}_w_default p{i+1}_h_default))\n"
     shapes_constraints += f"(declare-const p{i+1}_w Int)\n(declare-const p{i+1}_h Int)\n"
 
     # build rotation constraints
-    #rotation_constraints += f"(declare-const p{i+1}_rotate Bool)\n"
     rotation_constraints += f"(assert (or (and (= p{i+1}_w p{i+1}_w_default) (= p{i+1}_h p{i+1}_h_default)) \
                             \r            (and (= p{i+1}_w p{i+1}_h_default) (= p{i+1}_h p{i+1}_w_default)) ))\n\n"
 
@@ -130,9 +123,9 @@ $_ASSERT_NOT_OVERLAP
 
     # build not overlap constraints
     for j in range(i+2, len(instance[2:])+1):
-      not_overlap_constraints += f"(assert (not (overlap p{j}_x p{j}_y p{j}_w p{j}_h p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h))) \t;p{j} with p{i+1}\n"
-      not_overlap_constraints += f"(assert (not (overlap p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h p{j}_x p{j}_y p{j}_w p{j}_h))) \t;p{i+1} with p{j}\n\n"
-
+      not_overlap_constraints += f"(assert (not (overlap p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h p{j}_x p{j}_y p{j}_w p{j}_h))) \t;p{i+1} with p{j}\n"
+      not_overlap_constraints += f"(assert (not (overlap p{j}_x p{j}_y p{j}_w p{j}_h p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h))) \t;p{j} with p{i+1}\n\n"
+  
   # edit source code
   source = source.replace("$_NAME", name)
   source = source.replace("$_MAXWIDTH", str(instance[0].split(" ")[0]))
@@ -212,71 +205,6 @@ def create_solution_file(smt_solution, instance, verbose=False, output_dir="."):
 
 
 
-# convert the smt solution to a human readable format
-# def DEPREC_create_solution_file(smt_solution_file_name, instance, verbose=False):
-
-#   if not os.path.exists(smt_solution_file_name):
-#     print(f"File '{smt_solution_file_name}' is empty.")
-
-#   with open(smt_solution_file_name) as f:
-#     output = f.read()
-#     if output == "": 
-#       print(f"{smt_solution_file_name} is empty")
-#       return
-
-#     output = output.replace("define-fun", "")
-#     output = output.replace("(", "")
-#     output = output.replace(")", "")
-#     output = output.replace("Int", "")
-#     output = output.replace("Bool", "")
-
-#     output = output.split("\n")
-#     output = [(output[i].strip(), output[i+1].strip()) for i in range(2, len(output)-2, 2)] # format output
-#     rotations = [(p, v) for p, v in output if "rotate" in p]
-#     rotations = [(int(p.replace("p", "").replace("_rotate", "")), (v == "true")) for p, v in rotations ]
-#     rotations.sort()
-#     rotations = dict(rotations)
-#     # --------------------- debug -- print("\trotations: \t", rotations)
-#     output = [(p, v) for p, v in output if "_x" in p or "_y" in p] # keep only *_x and *_y variables
-#     output.sort()
-
-#     origins = {}
-#     for i in range(0, len(output)-1, 2):
-#       point_id = int(output[i][0].split("_")[0].replace("p", "")) # take the point id as integer
-#       origins[point_id] = (int(output[i][1]),  int(output[i+1][1])) # { id -> (x, y) }
-#     # --------------------- debug -- print("\torigins: \t", origins)
-
-#     solution_filename = smt_solution_file_name.split("/")[1].replace("smt_", "")
-#     solution_filename = "solutions/" + solution_filename
-
-#     with open(solution_filename, "w") as f:
-
-#       f.write(instance[0] + "\n" + instance[1]+"\n")
-
-#       for i, line in enumerate(instance[2:]):
-#         if rotations[i+1]:
-#           reversed_shape = " ".join(list(reversed(line.split(" "))))
-#           f.write(reversed_shape)
-#           print("\trotated", line, " -> ", reversed_shape)
-#         else:
-#           f.write(line)
-
-#         f.write(f"    {origins[i+1][0]} {origins[i+1][1]}")
-
-#         if i < len(instance[2:])-1: 
-#           f.write("\n")
-
-#     if verbose:
-#       print("{:10} {:10} {:<10}\n{}".format("shape","origin","must rotate", "-"*20))
-#       for shape, origin, rotate in zip(instance[2:], origins.values(), rotations.values()):
-#         print("{:10} {:10} {:<10}".format(shape, str(origin), "*" if rotate else ""))
-#       print("\n\n")
-
-#   return solution_filename    
-
-
-
-
 # show the olution as a plot and save it as an image file
 def visualize_solution(solution_file, verbose=False, save_image=True, show=False, output_dir="."):
   
@@ -324,15 +252,17 @@ def visualize_solution(solution_file, verbose=False, save_image=True, show=False
       print()
     print("\n")
 
-  fig = plt.figure(figsize=(8,6))
-  plt.imshow(paper_roll, cmap="Blues")
+  fig = plt.figure(figsize=(paper_roll_shape[0]*.75, paper_roll_shape[1]*.75))
+  plt.title(f"Solution {str(paper_roll_shape)}")
+  sns.heatmap(paper_roll, annot=True, linewidths=0, 
+              cmap=sns.color_palette("cubehelix", as_cmap=True).reversed(),
+              vmin=0, vmax=n_pieces,
+              cbar=False
+  )
   #plt.show()
   plt.title(f"Solution {str(paper_roll_shape)}")
+  plt.close(fig)
   ax = plt.gca()
-  #ax.set_xticks(np.arange(-.5, paper_roll_shape[0], 1))
-  #ax.set_yticks(np.arange(-.5, paper_roll_shape[1], 1))
-  #ax.set_xticklabels(np.arange(0, paper_roll_shape[0], 1))
-  #ax.set_yticklabels(np.arange(0, paper_roll_shape[1], 1))
 
   # correctness checking: each piece must have a coherent area
   if verbose: 
@@ -351,7 +281,6 @@ def visualize_solution(solution_file, verbose=False, save_image=True, show=False
   if save_image:
     img_name = f"{output_dir}/plot_" + solution_file.split("_")[-1].split(".")[0] + ".png"
     fig.savefig(img_name)
-    #print(f"\nimage saved as '{img_name}'")
 
     return img_name
   else:

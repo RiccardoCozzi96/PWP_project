@@ -1,0 +1,105 @@
+sat
+(
+  (define-fun p3_x () Int
+    0)
+  (define-fun p6_x () Int
+    3)
+  (define-fun p3_y () Int
+    7)
+  (define-fun p1_x () Int
+    6)
+  (define-fun p6_y () Int
+    4)
+  (define-fun p1_y () Int
+    9)
+  (define-fun p4_y () Int
+    3)
+  (define-fun p8_x () Int
+    6)
+  (define-fun p7_x () Int
+    9)
+  (define-fun p7_y () Int
+    3)
+  (define-fun p2_y () Int
+    0)
+  (define-fun p4_x () Int
+    6)
+  (define-fun p5_x () Int
+    0)
+  (define-fun p5_y () Int
+    0)
+  (define-fun p2_x () Int
+    3)
+  (define-fun p8_y () Int
+    0)
+  (define-fun p8_h () Int
+    3)
+  (define-fun p8_w () Int
+    6)
+  (define-fun p7_h () Int
+    9)
+  (define-fun p7_w () Int
+    3)
+  (define-fun p6_h () Int
+    8)
+  (define-fun p6_w () Int
+    3)
+  (define-fun p5_h () Int
+    7)
+  (define-fun p5_w () Int
+    3)
+  (define-fun p4_h () Int
+    6)
+  (define-fun p4_w () Int
+    3)
+  (define-fun p3_h () Int
+    5)
+  (define-fun p3_w () Int
+    3)
+  (define-fun p2_h () Int
+    4)
+  (define-fun p2_w () Int
+    3)
+  (define-fun p1_h () Int
+    3)
+  (define-fun p1_w () Int
+    3)
+  (define-fun height () Int
+    12)
+  (define-fun width () Int
+    12)
+  (define-fun overlap ((x!0 Int)
+   (x!1 Int)
+   (x!2 Int)
+   (x!3 Int)
+   (x!4 Int)
+   (x!5 Int)
+   (x!6 Int)
+   (x!7 Int)) Bool
+    (let ((a!1 (and (not (<= (+ x!7 x!5) x!3))
+                    (<= (+ x!7 x!5) (+ x!3 x!1))
+                    (not (<= (+ x!6 x!4) x!2))
+                    (<= (+ x!6 x!4) (+ x!2 x!0))))
+          (a!2 (and (<= x!3 x!7)
+                    (not (<= (+ x!3 x!1) x!7))
+                    (not (<= (+ x!6 x!4) x!2))
+                    (<= (+ x!6 x!4) (+ x!2 x!0))))
+          (a!3 (and (<= x!3 x!7)
+                    (not (<= (+ x!3 x!1) x!7))
+                    (<= x!6 x!2)
+                    (>= (+ x!6 x!4) (+ x!2 x!0))))
+          (a!4 (and (<= x!2 x!6)
+                    (not (<= (+ x!2 x!0) x!6))
+                    (not (<= (+ x!7 x!5) x!3))
+                    (<= (+ x!7 x!5) (+ x!3 x!1))))
+          (a!5 (and (<= x!3 x!7)
+                    (not (<= (+ x!3 x!1) x!7))
+                    (<= x!2 x!6)
+                    (not (<= (+ x!2 x!0) x!6)))))
+      (or a!1 a!2 a!3 a!4 a!5)))
+  (define-fun exceeds ((x!0 Int) (x!1 Int) (x!2 Int) (x!3 Int)) Bool
+    (or (not (<= (+ x!2 x!0) 12))
+        (not (<= 0 x!2))
+        (not (<= 0 x!3))
+        (not (<= (+ x!3 x!1) 12))))
+)

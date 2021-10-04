@@ -49,9 +49,9 @@ def plot_solution(solution_file_name, verbose=False, export_folder=None, show=Fa
       print()
     print("\n")
 
-  fig =  plt.figure(figsize=(paper_roll_shape[0]*.75, paper_roll_shape[1]*.5))
+  fig =  plt.figure(figsize=(paper_roll_shape[0]*.75, paper_roll_shape[1]*.75))
   plt.title(f"Solution {str(paper_roll_shape)}")
-  sns.heatmap(paper_roll, annot=True, linewidths=0, 
+  sns.heatmap(paper_roll, annot=True, linewidths=0,
               cmap=sns.color_palette("cubehelix", as_cmap=True).reversed(),
               vmin=0, vmax=n_pieces,
               cbar=False
