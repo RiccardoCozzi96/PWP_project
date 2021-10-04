@@ -58,15 +58,15 @@ for i, file_name in enumerate(data_files):
     #  - - - - - - solve the instnace
     print(f"\tSolving...\t[start time {time.strftime('%H:%M')}]")
     t0 = time.time()
-    # os.system(f"cmd /c {MINIZINC} --solver Gecode {MODEL_PATH} {DATA_PATH}/{file_name} > {solution_file}")
-    os.system(f"{MINIZINC} --solver Gecode {MODEL_PATH} {DATA_PATH}/{file_name} > {solution_file}")
+    os.system(f"{MINIZINC} --solver-time-limit 1800000 --solver Gecode {MODEL_PATH} {DATA_PATH}/{file_name} > {solution_file}")
+    # os.system(f"{MINIZINC} --solver Gecode {MODEL_PATH} {DATA_PATH}/{file_name} > {solution_file}")
     result = round(time.time() - t0, 3)
     print(f"\tsolved in \t[{result} s]")
     print("\tresult saved to\t", solution_file)
     
     # - - - - - - plot the solution
     try:
-        plot_name = plot_solution(solution_file, show=False, export_folder=PLOTS_PATH)
+        plot_name = plot_solution(solution_file, show=False, export_folder=PLOTS_PATH, verbose=False)
         print(f"\tplot saved as\t'{plot_name}'")
     except:
         print(f"Impossible to show the solution: Incorrect/Unsatisfiable")

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import seaborn as sns
 
 def plot_solution(solution_file_name, verbose=False, export_folder=None, show=False):
   
@@ -29,7 +30,7 @@ def plot_solution(solution_file_name, verbose=False, export_folder=None, show=Fa
   for id, (shape, origin) in enumerate(pieces_positions):
     for i in range(origin[1], origin[1]+shape[1]):
       for j in range(origin[0], origin[0]+shape[0]):
-
+        
         try:
           assert paper_roll[i, j] == 0
         except: 
@@ -48,15 +49,17 @@ def plot_solution(solution_file_name, verbose=False, export_folder=None, show=Fa
       print()
     print("\n")
 
-  fig = plt.figure(figsize=(8,6))
-  plt.imshow(paper_roll, cmap="Blues")
+  fig =  plt.figure(figsize=(paper_roll_shape[0]*.75, paper_roll_shape[1]*.5))
+  plt.title(f"Solution {str(paper_roll_shape)}")
+  sns.heatmap(paper_roll, annot=True, linewidths=0, 
+              cmap=sns.color_palette("cubehelix", as_cmap=True).reversed(),
+              vmin=0, vmax=n_pieces,
+              cbar=False
+  )
   #plt.show()
   plt.title(f"Solution {str(paper_roll_shape)}")
+  plt.close(fig)
   ax = plt.gca()
-  #ax.set_xticks(np.arange(-.5, paper_roll_shape[0], 1))
-  #ax.set_yticks(np.arange(-.5, paper_roll_shape[1], 1))
-  #ax.set_xticklabels(np.arange(0, paper_roll_shape[0], 1))
-  #ax.set_yticklabels(np.arange(0, paper_roll_shape[1], 1))
 
   # correctness checking: each piece must have a coherent area
   if verbose: 

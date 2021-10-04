@@ -17,7 +17,6 @@ set of int: INDICES = 1..n;                % indices of the pieces of paper
 array[INDICES, 1..2] of var int: origins;  % matrix Nx2 of origin points for the pieces
 array[INDICES, 1..2] of int: shapes;       % matrix Nx2 of the shapes of the pieces
 
-
 % % % % % % % % % %  CONSTRAINTS  % % % % % % % % % % % % 
 
 % origins domains fall in range [0,w] on axis x and in [0,h] on axis y
@@ -35,21 +34,17 @@ constraint diffn_k(origins, shapes);
 constraint cumulative(origins[.., x], shapes[.., x], shapes[.., y], h);
 constraint cumulative(origins[.., y], shapes[.., y], shapes[.., x], w);
 
+% % % % % % % % % %  SEARCH  % % % % % % % % % % % % 
 
-
-% % % % % % % % % %  SEARCh  % % % % % % % % % % % % 
 ann:search_ann;
-% search_ann = int_search(origins, first_fail, indomain_split);
-% search_ann = int_search(origins, most_constrained, indomain_split);
-% search_ann = int_search(origins, dom_w_deg, indomain_min);
-search_ann = seq_search([int_search(origins[.., x], dom_w_deg, indomain_min), % also try:first_fail, most_constrained, dom_w_deg
-                         int_search(origins[.., y], dom_w_deg, indomain_min) ]);
+search_ann = int_search(origins, dom_w_deg, indomain_min)
+
 ann:restart_ann;
 restart_ann = restart_luby(1000);
 
 solve :: search_ann
       :: restart_ann
-satisfy;
+      satisfy;
 
 % % % % % % % % % %  OUTPUTS  % % % % % % % % % % % % 
 

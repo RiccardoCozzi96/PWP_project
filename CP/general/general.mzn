@@ -19,12 +19,13 @@ array[INDICES, DIMS] of var int: origins;  % matrix Nx2 of origin points for the
 array[INDICES, DIMS] of int: shapes;       % matrix Nx2 of the shapes of the pieces
 
 % % % % % % % PRELIMINARY CHECK ON AREA % % % % % % %
+
 int: total_area = sum([shapes[i,x]*shapes[i,y] | i in INDICES]);
 constraint total_area <= h*w;
 
 % % % % % % % ROTATIONS CONSTRAINTS % % % % % % % % % 
 
-% true if a piece can rotate (so if it's rectangular)
+% true if a piece can rotate (so if it is rectangular)
 array[INDICES] of var bool: is_rectangular;
 constraint forall(i in INDICES) (
       if (shapes[i, x] != shapes[i, y]) then is_rectangular[i]
@@ -35,7 +36,7 @@ constraint forall(i in INDICES) (
 array[INDICES] of var bool: rotations;
 constraint forall(i in INDICES) (rotations[i] -> is_rectangular[i]);
 
-% true if the piece is choosen for the rotation
+% invert pieces dimensions if they have been rotated 
 array[INDICES, DIMS] of var int: rotated_shapes; 
 constraint forall(i in INDICES) (
               if (not rotations[i]) then rotated_shapes[i, ..] == shapes[i, ..] 
@@ -56,20 +57,16 @@ constraint forall(i in INDICES)
 constraint forall(i in INDICES)
                   (((origins[i,x] + rotated_shapes[i,x]) <= w) /\ ((origins[i,y] + rotated_shapes[i,y]) <= h));
                   
-% different pieces of paper must not overlap each other
+% pieces of paper must not overlap each other
 constraint diffn_k(origins, rotated_shapes);
 
 % pieces of paper must not exceed the the paper roll shapes
 constraint cumulative(origins[.., x], rotated_shapes[.., x], rotated_shapes[.., y], h);
 constraint cumulative(origins[.., y], rotated_shapes[.., y], rotated_shapes[.., x], w);
 
-
-  
 % % % % % % % % % %  SEARCH  % % % % % % % % % % % % 
+
 ann:search_ann;
-% search_ann = int_search(origins, first_fail, indomain_split);
-%search_ann = int_search(origins, most_constrained, indomain_split);
-% search_ann = int_search(origins, dom_w_deg, indomain_min);
 search_ann = seq_search([bool_search(rotations, dom_w_deg, indomain_min),
                          int_search(origins, dom_w_deg, indomain_min)]);
 ann:restart_ann;
