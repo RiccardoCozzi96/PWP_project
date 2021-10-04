@@ -70,9 +70,9 @@ $_DEFINE_SHAPES
       (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh)))    ; ends inside vertically       : by < (ay + ah) <= (by + bh)
     )
     (and 
-      (and (<= bx ax) (< ax (+ bx bw)))                   ; starts inside horizontally  : bx <= ax < (bx + bw)
-      (and (< bx (+ ax aw)) (<= (+ ax aw) (+ bx bw)))     ; ends inside horizontally    : bx < (ax + aw) <= (bx + bw)
-      (and (<= ay by) (>= (+ ay ah) (+ by bh)))           ; vertically starts outside before, ends outside after   : (by <= ay) and ((ay + ah) >= (by + bh))
+      (or (and (<= by ay) (< ay (+ by bh)))                   ; starts inside vertically  : by <= ay < (by + bh)
+          (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh))))    ; ends inside vertically    : by < (ay + ah) <= (by + bh)
+      (and (<= ax bx) (>= (+ ax aw) (+ bx bw)))               ; horizontally starts before, ends after   : (bx <= ax) and ((ax + aw) >= (bx + bw))
     )
   )
 )
@@ -88,6 +88,7 @@ $_ASSERT_NOT_OVERLAP
 
 
 ; sat-checking
+(set-option :timeout 1800000)
 (check-sat)
 (get-model)
 """
@@ -98,18 +99,18 @@ $_ASSERT_NOT_OVERLAP
   not_overlap_constraints = ""
 
   for i, shapes in enumerate(instance[2:]):
-    # build shape constraints 
+    # build shape constraints
     width, height = tuple(shapes.split(" "))
     shapes_constraints += f"(define-fun p{i+1}_w () Int {width})\n(define-fun p{i+1}_h () Int {height})\n"
-    # build origins constraints 
+    # build origins constraints
     origins_constraints += f"(declare-const p{i+1}_x Int)\n(declare-const p{i+1}_y Int)\n"
     # build not exceed constraints
     not_exceed_constraints += f"(assert (not (exceeds p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h))) ;p{i+1} coordinates do not exceed the sheet dimensions\n"
 
     # build not overlap constraints
     for j in range(i+2, len(instance[2:])+1):
-      not_overlap_constraints += f"(assert (not (overlap p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h p{j}_x p{j}_y p{j}_w p{j}_h))) \t;p{i+1} with p{j}\n\n"
-      not_overlap_constraints += f"(assert (not (overlap p{j}_x p{j}_y p{j}_w p{j}_h p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h))) \t;p{j} with p{i+1}\n"
+      not_overlap_constraints += f"(assert (not (overlap p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h p{j}_x p{j}_y p{j}_w p{j}_h))) \t;p{i+1} with p{j}\n"
+      not_overlap_constraints += f"(assert (not (overlap p{j}_x p{j}_y p{j}_w p{j}_h p{i+1}_x p{i+1}_y p{i+1}_w p{i+1}_h))) \t;p{j} with p{i+1}\n\n"
     
   # edit source code
   source = source.replace("$_NAME", name)
@@ -120,7 +121,7 @@ $_ASSERT_NOT_OVERLAP
   source = source.replace("$_ASSERT_NOT_EXCEEDS", not_exceed_constraints)
   source = source.replace("$_ASSERT_NOT_OVERLAP", not_overlap_constraints)
 
-  with open(f"{output_dir}/source_{name}.smt", "w") as f: 
+  with open(f"{output_dir}/source_{name}.smt", "w") as f:
     f.write(source)
 
 
@@ -228,7 +229,7 @@ def visualize_solution(solution_file, verbose=False, save_image=True, show=False
 
   fig = plt.figure(figsize=(paper_roll_shape[0]*.75, paper_roll_shape[1]*.75))
   plt.title(f"Solution {str(paper_roll_shape)}")
-  sns.heatmap(paper_roll, annot=True, linewidths=0,
+  sns.heatmap(paper_roll, annot=True, linewidths=0, 
               cmap=sns.color_palette("cubehelix", as_cmap=True).reversed(),
               vmin=0, vmax=n_pieces,
               cbar=False

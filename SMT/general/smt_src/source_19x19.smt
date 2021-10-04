@@ -163,9 +163,9 @@
       (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh)))   ; ends inside vertically      : by < (ay + ah) <= (by + bh)
     )
     (and 
-      (and (<= bx ax) (< ax (+ bx bw)))                 ; starts inside horizontally  : bx <= ax < (bx + bw)
-      (and (< bx (+ ax aw)) (<= (+ ax aw) (+ bx bw)))   ; ends inside horizontally    : bx < (ax + aw) <= (bx + bw)
-      (and (<= ay by) (>= (+ ay ah) (+ by bh)))         ; vertically starts outside, ends outside   : (by <= ay) and ((ay + ah) >= (by + bh))
+      (or (and (<= by ay) (< ay (+ by bh)))                   ; starts inside vertically  : by <= ay < (by + bh)
+          (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh))))    ; ends inside vertically    : by < (ay + ah) <= (by + bh)
+      (and (<= ax bx) (>= (+ ax aw) (+ bx bw)))               ; horizontally starts before, ends after   : (bx <= ax) and ((ax + aw) >= (bx + bw))
     )
   )
 )
@@ -468,5 +468,6 @@
 
 
 ; sat-checking
+(set-option :timeout 1800000)
 (check-sat)
 (get-model)

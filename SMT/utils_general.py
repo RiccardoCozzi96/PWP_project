@@ -72,9 +72,9 @@ $_DEFINE_ORIGINS
       (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh)))   ; ends inside vertically      : by < (ay + ah) <= (by + bh)
     )
     (and 
-      (and (<= bx ax) (< ax (+ bx bw)))                 ; starts inside horizontally  : bx <= ax < (bx + bw)
-      (and (< bx (+ ax aw)) (<= (+ ax aw) (+ bx bw)))   ; ends inside horizontally    : bx < (ax + aw) <= (bx + bw)
-      (and (<= ay by) (>= (+ ay ah) (+ by bh)))         ; vertically starts outside, ends outside   : (by <= ay) and ((ay + ah) >= (by + bh))
+      (or (and (<= by ay) (< ay (+ by bh)))                   ; starts inside vertically  : by <= ay < (by + bh)
+          (and (< by (+ ay ah)) (<= (+ ay ah) (+ by bh))))    ; ends inside vertically    : by < (ay + ah) <= (by + bh)
+      (and (<= ax bx) (>= (+ ax aw) (+ bx bw)))               ; horizontally starts before, ends after   : (bx <= ax) and ((ax + aw) >= (bx + bw))
     )
   )
 )
@@ -90,6 +90,7 @@ $_ASSERT_NOT_OVERLAP
 
 
 ; sat-checking
+(set-option :timeout 1800000)
 (check-sat)
 (get-model)
 """
@@ -154,13 +155,13 @@ def create_solution_file(smt_solution, instance, verbose=False, output_dir="."):
   with open(smt_solution) as f:
     output = f.read()
 
-    if output[:3] == "sat":
+    if output.split("\n")[0] == "sat":
       pass
-    elif output[:3] == "":
+    elif output.split("\n")[0] == "unsat":
+      return "UNSAT", None
+    else:
       print(f"'{smt_solution}' does not contain a smt solution")
       return "ERROR", None
-    else:
-      return "UNSAT", None
       
     output = output.replace("define-fun", "").replace("(", "").replace(")", "").replace("Int", "").replace("Bool", "")
     output = output.split("\n")

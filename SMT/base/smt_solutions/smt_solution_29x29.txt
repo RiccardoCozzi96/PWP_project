@@ -1,233 +1,199 @@
 sat
 (
-  (define-fun p3_x () Int
-    22)
-  (define-fun p6_x () Int
-    0)
-  (define-fun p9_y () Int
-    18)
-  (define-fun p12_x () Int
-    15)
-  (define-fun p6_y () Int
-    21)
-  (define-fun p14_x () Int
-    11)
-  (define-fun p1_y () Int
-    19)
-  (define-fun p16_y () Int
-    15)
-  (define-fun p18_x () Int
-    25)
-  (define-fun p11_y () Int
-    0)
-  (define-fun p15_x () Int
-    21)
-  (define-fun p4_y () Int
-    15)
-  (define-fun p10_x () Int
-    5)
-  (define-fun p21_x () Int
-    25)
-  (define-fun p7_x () Int
-    15)
-  (define-fun p7_y () Int
-    0)
-  (define-fun p16_x () Int
-    21)
-  (define-fun p5_y () Int
-    22)
-  (define-fun p21_y () Int
-    9)
-  (define-fun p17_y () Int
-    18)
-  (define-fun p23_y () Int
-    21)
-  (define-fun p19_y () Int
-    0)
-  (define-fun p3_y () Int
-    10)
-  (define-fun p1_x () Int
-    18)
-  (define-fun p20_x () Int
-    11)
-  (define-fun p17_x () Int
-    11)
-  (define-fun p13_x () Int
-    21)
-  (define-fun p19_x () Int
-    18)
-  (define-fun p20_y () Int
-    0)
-  (define-fun p9_x () Int
-    8)
-  (define-fun p12_y () Int
-    9)
-  (define-fun p23_x () Int
-    3)
-  (define-fun p13_y () Int
-    21)
-  (define-fun p24_x () Int
-    0)
-  (define-fun p24_y () Int
-    0)
-  (define-fun p8_x () Int
-    22)
-  (define-fun p14_y () Int
-    25)
-  (define-fun p15_y () Int
-    24)
-  (define-fun p2_y () Int
-    15)
-  (define-fun p11_x () Int
-    8)
-  (define-fun p4_x () Int
-    5)
-  (define-fun p22_y () Int
-    17)
-  (define-fun p5_x () Int
-    18)
-  (define-fun p10_y () Int
-    0)
-  (define-fun p2_x () Int
-    18)
-  (define-fun p18_y () Int
-    0)
-  (define-fun p8_y () Int
-    0)
-  (define-fun p22_x () Int
-    0)
-  (define-fun p24_h () Int
-    17)
-  (define-fun p24_w () Int
-    5)
-  (define-fun p23_h () Int
-    8)
-  (define-fun p23_w () Int
-    5)
-  (define-fun p22_h () Int
-    4)
-  (define-fun p22_w () Int
-    5)
-  (define-fun p21_h () Int
-    20)
-  (define-fun p21_w () Int
-    4)
-  (define-fun p20_h () Int
-    18)
-  (define-fun p20_w () Int
-    4)
-  (define-fun p19_h () Int
-    15)
-  (define-fun p19_w () Int
-    4)
-  (define-fun p18_h () Int
-    9)
-  (define-fun p18_w () Int
-    4)
-  (define-fun p17_h () Int
-    7)
-  (define-fun p17_w () Int
-    4)
-  (define-fun p16_h () Int
-    6)
-  (define-fun p16_w () Int
-    4)
-  (define-fun p15_h () Int
-    5)
-  (define-fun p15_w () Int
-    4)
-  (define-fun p14_h () Int
-    4)
-  (define-fun p14_w () Int
-    4)
-  (define-fun p13_h () Int
-    3)
-  (define-fun p13_w () Int
-    4)
   (define-fun p12_h () Int
     20)
-  (define-fun p12_w () Int
-    3)
-  (define-fun p11_h () Int
-    18)
-  (define-fun p11_w () Int
-    3)
-  (define-fun p10_h () Int
-    15)
-  (define-fun p10_w () Int
-    3)
-  (define-fun p9_h () Int
-    11)
+  (define-fun p4_x () Int
+    13)
+  (define-fun p9_x () Int
+    6)
+  (define-fun p11_y () Int
+    0)
   (define-fun p9_w () Int
     3)
-  (define-fun p8_h () Int
-    10)
-  (define-fun p8_w () Int
-    3)
-  (define-fun p7_h () Int
-    9)
-  (define-fun p7_w () Int
-    3)
-  (define-fun p6_h () Int
-    8)
   (define-fun p6_w () Int
     3)
-  (define-fun p5_h () Int
-    7)
-  (define-fun p5_w () Int
+  (define-fun p16_h () Int
+    6)
+  (define-fun p8_x () Int
+    0)
+  (define-fun p15_x () Int
+    16)
+  (define-fun p14_y () Int
+    18)
+  (define-fun p20_x () Int
+    20)
+  (define-fun p17_w () Int
+    4)
+  (define-fun p22_x () Int
+    24)
+  (define-fun p17_x () Int
+    20)
+  (define-fun p10_y () Int
+    0)
+  (define-fun p18_y () Int
+    20)
+  (define-fun p13_h () Int
+    3)
+  (define-fun p3_w () Int
+    3)
+  (define-fun p2_x () Int
     3)
   (define-fun p4_h () Int
     6)
+  (define-fun p21_x () Int
+    9)
+  (define-fun p8_y () Int
+    12)
   (define-fun p4_w () Int
     3)
+  (define-fun p16_x () Int
+    16)
+  (define-fun p16_w () Int
+    4)
+  (define-fun p8_h () Int
+    10)
+  (define-fun p24_w () Int
+    5)
+  (define-fun p6_y () Int
+    15)
+  (define-fun p6_x () Int
+    13)
+  (define-fun p20_h () Int
+    18)
+  (define-fun p24_y () Int
+    8)
+  (define-fun p19_w () Int
+    4)
+  (define-fun p13_w () Int
+    4)
+  (define-fun p13_x () Int
+    16)
+  (define-fun p14_h () Int
+    4)
+  (define-fun p11_w () Int
+    3)
+  (define-fun p11_x () Int
+    6)
+  (define-fun p11_h () Int
+    18)
+  (define-fun p6_h () Int
+    8)
+  (define-fun p18_x () Int
+    9)
+  (define-fun p12_y () Int
+    9)
+  (define-fun p3_y () Int
+    0)
+  (define-fun p5_y () Int
+    22)
+  (define-fun p18_h () Int
+    9)
   (define-fun p3_h () Int
     5)
-  (define-fun p3_w () Int
+  (define-fun p17_h () Int
+    7)
+  (define-fun p15_w () Int
+    4)
+  (define-fun p14_w () Int
+    4)
+  (define-fun p15_h () Int
+    5)
+  (define-fun p3_x () Int
     3)
+  (define-fun p5_w () Int
+    3)
+  (define-fun p21_w () Int
+    4)
   (define-fun p2_h () Int
+    4)
+  (define-fun p4_y () Int
+    23)
+  (define-fun p19_h () Int
+    15)
+  (define-fun p12_x () Int
+    3)
+  (define-fun p22_h () Int
     4)
   (define-fun p2_w () Int
     3)
-  (define-fun p1_h () Int
+  (define-fun p13_y () Int
+    26)
+  (define-fun p10_x () Int
+    13)
+  (define-fun p15_y () Int
+    21)
+  (define-fun p19_x () Int
+    16)
+  (define-fun p16_y () Int
+    0)
+  (define-fun p2_y () Int
+    5)
+  (define-fun p9_h () Int
+    11)
+  (define-fun p23_x () Int
+    24)
+  (define-fun p7_x () Int
+    0)
+  (define-fun p18_w () Int
+    4)
+  (define-fun p7_y () Int
     3)
-  (define-fun p1_w () Int
-    3)
+  (define-fun p5_h () Int
+    7)
+  (define-fun p1_x () Int
+    0)
   (define-fun height () Int
     29)
   (define-fun width () Int
     29)
-  (define-fun overlap ((x!0 Int)
-   (x!1 Int)
-   (x!2 Int)
-   (x!3 Int)
-   (x!4 Int)
-   (x!5 Int)
-   (x!6 Int)
-   (x!7 Int)) Bool
-    (let ((a!1 (and (<= x!2 x!6)
-                    (not (<= (+ x!2 x!0) x!6))
-                    (not (<= (+ x!7 x!5) x!3))
-                    (<= (+ x!7 x!5) (+ x!3 x!1))))
-          (a!2 (and (<= x!3 x!7)
-                    (not (<= (+ x!3 x!1) x!7))
-                    (<= x!6 x!2)
-                    (>= (+ x!6 x!4) (+ x!2 x!0))))
-          (a!3 (and (not (<= (+ x!7 x!5) x!3))
-                    (<= (+ x!7 x!5) (+ x!3 x!1))
-                    (not (<= (+ x!6 x!4) x!2))
-                    (<= (+ x!6 x!4) (+ x!2 x!0))))
-          (a!4 (and (<= x!3 x!7)
-                    (not (<= (+ x!3 x!1) x!7))
-                    (not (<= (+ x!6 x!4) x!2))
-                    (<= (+ x!6 x!4) (+ x!2 x!0))))
-          (a!5 (and (<= x!3 x!7)
-                    (not (<= (+ x!3 x!1) x!7))
-                    (<= x!2 x!6)
-                    (not (<= (+ x!2 x!0) x!6)))))
-      (or a!1 a!2 a!3 a!4 a!5)))
-  (define-fun exceeds ((x!0 Int) (x!1 Int) (x!2 Int) (x!3 Int)) Bool
-    (or (not (<= 0 x!2))
-        (not (<= 0 x!3))
-        (not (<= (+ x!2 x!0) 29))
-        (not (<= (+ x!3 x!1) 29))))
+  (define-fun p1_w () Int
+    3)
+  (define-fun p21_h () Int
+    20)
+  (define-fun p9_y () Int
+    18)
+  (define-fun p22_w () Int
+    5)
+  (define-fun p7_w () Int
+    3)
+  (define-fun p7_h () Int
+    9)
+  (define-fun p21_y () Int
+    0)
+  (define-fun p14_x () Int
+    20)
+  (define-fun p5_x () Int
+    0)
+  (define-fun p20_y () Int
+    0)
+  (define-fun p17_y () Int
+    22)
+  (define-fun p10_w () Int
+    3)
+  (define-fun p1_y () Int
+    0)
+  (define-fun p1_h () Int
+    3)
+  (define-fun p8_w () Int
+    3)
+  (define-fun p24_h () Int
+    17)
+  (define-fun p20_w () Int
+    4)
+  (define-fun p24_x () Int
+    24)
+  (define-fun p23_y () Int
+    0)
+  (define-fun p10_h () Int
+    15)
+  (define-fun p23_h () Int
+    8)
+  (define-fun p23_w () Int
+    5)
+  (define-fun p22_y () Int
+    25)
+  (define-fun p19_y () Int
+    6)
+  (define-fun p12_w () Int
+    3)
 )
