@@ -1,11 +1,11 @@
 # Execution files
-log.json
-plots/
-solutions/
-smt_solutions/
-smt_src/
-SMT/base/
-SMT/general/
+# log.json
+# plots/
+# solutions/
+# smt_solutions/
+# smt_src/
+# SMT/base/
+# SMT/general/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

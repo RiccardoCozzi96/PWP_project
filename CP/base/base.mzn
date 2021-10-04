@@ -19,20 +19,29 @@ array[INDICES, 1..2] of int: shapes;       % matrix Nx2 of the shapes of the pie
 
 % % % % % % % % % %  CONSTRAINTS  % % % % % % % % % % % % 
 
-% origins domains fall in range [0,w] on axis x and in [0,h] on axis y
+% origins domain at least 0 and each piece must fit in the paper roll
 constraint forall(i in INDICES)
-  ((origins[i, x] >= 0 /\ origins[i, x] < w) /\ (origins[i, y] >= 0 /\ origins[i, y] < h));
-
-% each piece must fit in the paper roll
-constraint forall(i in INDICES)
-                  (((origins[i,x] + shapes[i,x]) <= w) /\ ((origins[i,y] + shapes[i,y]) <= h));
+  ((origins[i, x] >= 0 /\ ((origins[i, x] + shapes[i, x]) <= w)) /\ 
+   (origins[i, y] >= 0 /\ ((origins[i, y] + shapes[i, y]) <= h)));
                   
 % different pieces of paper must not overlap each other
 constraint diffn_k(origins, shapes);
 
-% pieces of paper must not exceed the the paper roll shapes
-constraint cumulative(origins[.., x], shapes[.., x], shapes[.., y], h);
-constraint cumulative(origins[.., y], shapes[.., y], shapes[.., x], w);
+% pieces of paper stacked on the same axis must not exceed the the paper roll shapes
+% constraint cumulative(origins[.., x], shapes[.., x], shapes[.., y], h);
+% constraint cumulative(origins[.., y], shapes[.., y], shapes[.., x], w);
+constraint forall(col in 1..w-1) (
+            sum(i in INDICES) (
+              if ((col >= origins[i, x]) /\ 
+                  (col < (origins[i, x] + shapes[i, x])))
+              then shapes[i, y] else 0 endif)
+            == h) /\
+          forall (row in 1..h-1) (
+            sum(i in INDICES) (
+              if ((row >= origins[i, y]) /\
+                  (row <  (origins[i, y] + shapes[i,y])))
+              then shapes[i, x] else 0 endif)
+            == w);
 
 % % % % % % % % % %  SEARCH  % % % % % % % % % % % % 
 

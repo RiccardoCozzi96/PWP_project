@@ -18,11 +18,6 @@ set of int: DIMS = 1..2;                   % each piece of paper is defined in 2
 array[INDICES, DIMS] of var int: origins;  % matrix Nx2 of origin points for the pieces
 array[INDICES, DIMS] of int: shapes;       % matrix Nx2 of the shapes of the pieces
 
-% % % % % % % PRELIMINARY CHECK ON AREA % % % % % % %
-
-int: total_area = sum([shapes[i,x]*shapes[i,y] | i in INDICES]);
-constraint total_area <= h*w;
-
 % % % % % % % ROTATIONS CONSTRAINTS % % % % % % % % % 
 
 % true if a piece can rotate (so if it is rectangular)
@@ -43,26 +38,35 @@ constraint forall(i in INDICES) (
               else rotated_shapes[i, x] = shapes[i, y] /\ rotated_shapes[i, y] = shapes[i, x] endif
               );
               
-% origins domains fall in range [0,w] on axis x and in [0,h] on axis y
+% rotated_shapes domain falls in range [1,w] on axis x and in [1,h] on axis y
 constraint forall(i in INDICES)
   ((rotated_shapes[i, x] > 0 /\ rotated_shapes[i, x] <= w) /\ (rotated_shapes[i, y] > 0 /\ rotated_shapes[i, y] <= h));
 
 % % % % % % % % % %  BASE CONSTRAINTS  % % % % % % % % % % % % 
 
-% origins domains fall in range [0,w] on axis x and in [0,h] on axis y
+% origins domain at least 0 and each piece must fit in the paper roll
 constraint forall(i in INDICES)
-  ((origins[i, x] >= 0 /\ origins[i, x] < w) /\ (origins[i, y] >= 0 /\ origins[i, y] < h));
-
-% each piece must fit in the paper roll
-constraint forall(i in INDICES)
-                  (((origins[i,x] + rotated_shapes[i,x]) <= w) /\ ((origins[i,y] + rotated_shapes[i,y]) <= h));
+  ((origins[i, x] >= 0 /\ ((origins[i, x] + rotated_shapes[i, x]) <= w)) /\ 
+   (origins[i, y] >= 0 /\ ((origins[i, y] + rotated_shapes[i, y]) <= h)));
                   
 % pieces of paper must not overlap each other
 constraint diffn_k(origins, rotated_shapes);
 
-% pieces of paper must not exceed the the paper roll shapes
-constraint cumulative(origins[.., x], rotated_shapes[.., x], rotated_shapes[.., y], h);
-constraint cumulative(origins[.., y], rotated_shapes[.., y], rotated_shapes[.., x], w);
+% pieces of paper stacked on the same axis must not exceed the the paper roll shapes
+% constraint cumulative(origins[.., x], rotated_shapes[.., x], rotated_shapes[.., y], h);
+% constraint cumulative(origins[.., y], rotated_shapes[.., y], rotated_shapes[.., x], w);
+constraint forall(col in 1..w-1) (
+            sum(i in INDICES) (
+              if ((col >= origins[i, x]) /\ 
+                  (col < (origins[i, x] + rotated_shapes[i, x])))
+              then rotated_shapes[i, y] else 0 endif)
+            == h) /\
+          forall (row in 1..h-1) (
+            sum(i in INDICES) (
+              if ((row >= origins[i, y]) /\
+                  (row <  (origins[i, y] + rotated_shapes[i,y])))
+              then rotated_shapes[i, x] else 0 endif)
+            == w);
 
 % % % % % % % % % %  SEARCH  % % % % % % % % % % % % 
 
