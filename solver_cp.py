@@ -87,7 +87,7 @@ for i, file_name in enumerate(data_files):
     log[instance_name] = result
     with open(LOG_PATH, "w") as f: json.dump(log, f)
    
-   # --- rename solutions files as required
+# --- rename solutions files as required
 import os
 for name in os.listdir(SOLUTIONS_PATH):
     new_name = name.replace(".txt", "").split("_")[1] + "-out.txt"
